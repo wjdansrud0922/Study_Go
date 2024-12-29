@@ -12,8 +12,12 @@ func main() {
 
 	// BlockedIPMiddleware
 	router.Use(middleware.BlockedIPMiddleware())
+
 	//TokenAuthMiddleware
 	router.Use(middleware.TokenAuthMiddleware())
+
+	//ValidateJSONBody
+	router.Use(middleware.ValidateJSONBody())
 
 	// BlockedIPMiddleware
 	router.GET("/BlockedIPMiddleware", func(c *gin.Context) {
@@ -27,6 +31,13 @@ func main() {
 	router.GET("/TokenAuthMiddleware", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "You have accessed secure data!",
+		})
+	})
+
+	//ValidateJSONBody
+	router.POST("/ValidateJSONBody", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "No middleware, body validation skipped!",
 		})
 	})
 
