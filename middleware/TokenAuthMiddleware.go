@@ -11,14 +11,14 @@ func TokenAuthMiddleware() gin.HandlerFunc {
 		token := c.GetHeader("Authorization")
 
 		if token == "" {
-			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
 				"msg": "Token is nil",
 			})
 			return
 		}
 
 		if token != validToken {
-			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
 				"msg": "Token is not valid",
 			})
 			return
