@@ -6,8 +6,8 @@ import (
 )
 
 type User struct {
-	Username string `json:"username"` //일부러 binding 제거함 binding:"required
-	Password string `json:"password"`
+	Username string `json:"username" binding:"required"`
+	Password string `json:"password" binding:"required"`
 }
 
 func ValidateJSONBody() gin.HandlerFunc {
