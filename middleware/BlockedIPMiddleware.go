@@ -8,7 +8,7 @@ import (
 
 func BlockedIPMiddleware() gin.HandlerFunc {
 
-	bannedIPs := []string{"::1", "222.222.222.222"}
+	bannedIPs := []string{"111.111.111.111", "222.222.222.222"} //::1(관리자 ip)
 
 	return func(c *gin.Context) {
 		clientIP := c.ClientIP()
@@ -23,7 +23,7 @@ func BlockedIPMiddleware() gin.HandlerFunc {
 				return
 			}
 		}
-		
+
 		c.Next()
 	}
 }

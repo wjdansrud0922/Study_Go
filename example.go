@@ -10,14 +10,23 @@ import (
 func main() {
 	router := gin.New()
 
-	// 차단된 IP 미들웨어 추가
+	// BlockedIPMiddleware
 	router.Use(middleware.BlockedIPMiddleware())
+	//TokenAuthMiddleware
+	router.Use(middleware.TokenAuthMiddleware())
 
-	// 테스트 엔드포인트
-	router.GET("/check", func(c *gin.Context) {
+	// BlockedIPMiddleware
+	router.GET("/BlockedIPMiddleware", func(c *gin.Context) {
 		log.Printf("|%s", c.ClientIP())
 		c.JSON(http.StatusOK, gin.H{
 			"message": "You are allowed to access this endpoint!",
+		})
+	})
+
+	//TokenAuthMiddleware
+	router.GET("/TokenAuthMiddleware", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "You have accessed secure data!",
 		})
 	})
 
