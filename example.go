@@ -1,7 +1,6 @@
 package main
 
 import (
-	"Study_Go/middleware"
 	"github.com/gin-gonic/gin"
 	"io"
 	"log"
@@ -24,7 +23,7 @@ func main() {
 	f, _ := os.Create("gin.log")
 	gin.DefaultWriter = io.MultiWriter(f)
 
-	///* 커스텀 미들웨어
+	/* 커스텀 미들웨어
 	// BlockedIPMiddleware
 	router.Use(middleware.BlockedIPMiddleware())
 
@@ -68,7 +67,16 @@ func main() {
 			})
 		})
 	}
-	//*/
+	*/
+
+	router.LoadHTMLGlob("templates/*")
+	//router.LoadHTMLFiles("templates/index.tmpl" , ~~)
+
+	router.GET("/index", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "index.tmpl", gin.H{
+			"title": "Main WebSite",
+		})
+	})
 
 	router.Run(":8080") // 서버 실행
 }
