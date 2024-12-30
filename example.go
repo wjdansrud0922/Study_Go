@@ -3,8 +3,10 @@ package main
 import (
 	"Study_Go/middleware"
 	"github.com/gin-gonic/gin"
+	"io"
 	"log"
 	"net/http"
+	"os"
 )
 
 func main() {
@@ -17,6 +19,11 @@ func main() {
 	//함수가 속한 패키지(main).
 	//	정의된 함수(main()).
 	//	익명 함수의 자동 이름(func2).
+
+	//로그를 파일로 저장 How to write log file
+	f, _ := os.Create("gin.log")
+	gin.DefaultWriter = io.MultiWriter(f)
+
 	///* 커스텀 미들웨어
 	// BlockedIPMiddleware
 	router.Use(middleware.BlockedIPMiddleware())
