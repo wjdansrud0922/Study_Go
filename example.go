@@ -9,7 +9,7 @@ import (
 
 func main() {
 	router := gin.New()
-
+	///* 미들웨어
 	// BlockedIPMiddleware
 	router.Use(middleware.BlockedIPMiddleware())
 
@@ -18,6 +18,9 @@ func main() {
 
 	//ValidateJSONBody
 	router.Use(middleware.ValidateJSONBody())
+
+	//RateLimiterMiddleware
+	router.Use(middleware.RateLimiterMiddleware())
 
 	// BlockedIPMiddleware
 	router.GET("/BlockedIPMiddleware", func(c *gin.Context) {
@@ -41,5 +44,12 @@ func main() {
 		})
 	})
 
+	//RateLimiterMiddleware
+	router.GET("/RateLimiterMiddleware", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "Good Request",
+		})
+	})
+	//*/
 	router.Run(":8080") // 서버 실행
 }
