@@ -9,7 +9,15 @@ import (
 
 func main() {
 	router := gin.New()
-	///* 미들웨어
+
+	gin.DebugPrintRouteFunc = func(httpMethod, absolutePath, handlerName string, nuHandlers int) {
+		log.Printf("| httpMethod : %v | 경로 : %v | 핸들러이름 : %v | 핸들러 갯수 : %v |", httpMethod, absolutePath, handlerName, nuHandlers)
+	}
+	//핸들러 이름이 main.main.func2 이지랄 나는 이유
+	//함수가 속한 패키지(main).
+	//	정의된 함수(main()).
+	//	익명 함수의 자동 이름(func2).
+	///* 커스텀 미들웨어
 	// BlockedIPMiddleware
 	router.Use(middleware.BlockedIPMiddleware())
 
@@ -51,5 +59,6 @@ func main() {
 		})
 	})
 	//*/
+
 	router.Run(":8080") // 서버 실행
 }
