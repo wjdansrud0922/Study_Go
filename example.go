@@ -30,34 +30,37 @@ func main() {
 	//RateLimiterMiddleware
 	router.Use(middleware.RateLimiterMiddleware())
 
-	// BlockedIPMiddleware
-	router.GET("/BlockedIPMiddleware", func(c *gin.Context) {
-		log.Printf("|%s", c.ClientIP())
-		c.JSON(http.StatusOK, gin.H{
-			"message": "You are allowed to access this endpoint!",
+	middleware := router.Group("/middleware")
+	{
+		// BlockedIPMiddleware
+		middleware.GET("/BlockedIPMiddleware", func(c *gin.Context) {
+			log.Printf("|%s", c.ClientIP())
+			c.JSON(http.StatusOK, gin.H{
+				"message": "You are allowed to access this endpoint!",
+			})
 		})
-	})
 
-	//TokenAuthMiddleware
-	router.GET("/TokenAuthMiddleware", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "You have accessed secure data!",
+		//TokenAuthMiddleware
+		middleware.GET("/TokenAuthMiddleware", func(c *gin.Context) {
+			c.JSON(http.StatusOK, gin.H{
+				"message": "You have accessed secure data!",
+			})
 		})
-	})
 
-	//ValidateJSONBody
-	router.POST("/ValidateJSONBody", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "No middleware, body validation skipped!",
+		//ValidateJSONBody
+		middleware.POST("/ValidateJSONBody", func(c *gin.Context) {
+			c.JSON(http.StatusOK, gin.H{
+				"message": "No middleware, body validation skipped!",
+			})
 		})
-	})
 
-	//RateLimiterMiddleware
-	router.GET("/RateLimiterMiddleware", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "Good Request",
+		//RateLimiterMiddleware
+		middleware.GET("/RateLimiterMiddleware", func(c *gin.Context) {
+			c.JSON(http.StatusOK, gin.H{
+				"message": "Good Request",
+			})
 		})
-	})
+	}
 	//*/
 
 	router.Run(":8080") // 서버 실행
